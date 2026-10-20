@@ -1,0 +1,110 @@
+---
+import Base from '../../layouts/Base.astro';
+import { works, profile } from '../../data/works.js';
+
+export function getStaticPaths() {
+  return works.map((w, i) => ({ params: { slug: w.slug }, props: { w, i } }));
+}
+
+const { w, i } = Astro.props;
+const next = works[(i + 1) % works.length];
+---
+<Base title={`${w.title} · ${profile.name} ${profile.en}`} description={w.sub}>
+  <header class="case-top">
+    <div class="wrap">
+      <a class="back" href="/#work">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M13 8H3M7 4L3 8l4 4"/></svg>
+        返回作品
+      </a>
+      <h1 class="case-title" data-reveal>{w.title}</h1>
+    </div>
+  </header>
+
+  {w.shots.length > 0 && (
+    <section class="block">
+      <div class="wrap">
+        <h2 data-reveal>数据截图</h2>
+        <div class={`gallery ${w.shots.length > 1 ? 'g-2' : ''}`}>
+          {w.shots.map((s, n) => (
+            <figure class="shot" data-reveal={n * 60} style="margin:0">
+              {s.src
+                ? <a href={s.src} target="_blank" rel="noopener" class="zoom"><img src={s.src} alt={s.cap} loading="lazy" decoding="async" /></a>
+                : <div class="box"><div><span class="tag">待上传</span><br />{s.cap}</div></div>}
+              <figcaption>{s.cap}</figcaption>
+            </figure>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  {w.videos.length > 0 && (
+    <section class="block">
+      <div class="wrap">
+        <h2 data-reveal>视频</h2>
+        <div class={`gallery ${w.videos.length >= 3 ? 'g-3' : w.videos.length === 2 ? 'g-2' : ''}`}>
+          {w.videos.map((v, n) => (
+            <figure class="shot" data-reveal={n * 60} style="margin:0">
+              {v.src
+                ? <video src={v.src} poster={v.poster || undefined} controls playsinline preload="none" style="width:100%;display:block;background:#111"></video>
+                : <div class="box vbox"><div><span class="tag">待上传</span><br />{v.cap}</div></div>}
+              <figcaption>{v.cap}</figcaption>
+            </figure>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <a class="next" href={`/work/${next.slug}/`}>
+    <div class="wrap">
+      <span class="k">下一个</span>
+      <span class="t">{next.title}<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span>
+    </div>
+  </a>
+</Base>
+
+<style>
+  .flow{
+    list-style:none; margin:0; padding:0;
+    display:grid; grid-template-columns:repeat(6, minmax(0,1fr));
+    border:1px solid var(--line); background:var(--line); gap:1px;
+  }
+  .flow li{
+    background:var(--bg); padding:20px 16px 22px;
+    font-size:14.5px; font-weight:600;
+    transition:background .35s var(--ease-out);
+  }
+  .flow li:hover{ background:var(--accent); }
+  .flow .n{
+    display:block; margin-bottom:10px;
+    font-size:11.5px; font-weight:400; letter-spacing:.12em; color:var(--ink-3);
+  }
+  .vbox{ aspect-ratio:9/16 !important; }
+  .zoom{ display:block; cursor:zoom-in; }
+
+  .next{
+    display:block; border-top:1px solid var(--line);
+    padding-block:clamp(48px,8vw,96px);
+    transition:background .45s var(--ease-out);
+  }
+  .next:hover{ background:var(--accent); }
+  .next .k{
+    display:block; margin-bottom:10px;
+    font-size:12px; letter-spacing:.16em; color:var(--ink-3);
+  }
+  .next .t{
+    display:inline-flex; align-items:center; gap:.4em;
+    font-size:clamp(28px,5vw,60px); font-weight:600; letter-spacing:-.025em; line-height:1.1;
+  }
+  .next .t svg{ width:.6em; height:.6em; transition:transform .45s var(--ease-out); }
+  .next:hover .t svg{ transform:translateX(8px); }
+
+  @media (max-width:920px){
+    .flow{ grid-template-columns:repeat(3, minmax(0,1fr)); }
+  }
+  @media (max-width:640px){
+    .flow{ grid-template-columns:repeat(2, minmax(0,1fr)); }
+    .vbox{ aspect-ratio:4/5 !important; }
+  }
+</style>

@@ -1,0 +1,438 @@
+---
+import Base from '../layouts/Base.astro';
+import { works, profile } from '../data/works.js';
+import '../styles/work-cards.css';
+
+// 把副标题里的数字拆出来，供滚动计数（无 JS 时照常显示原值）
+const NUM_RE = /(\d{1,3}(?:,\d{3})+(?:\.\d+)?|\d+(?:\.\d+)?)/g;
+const splitNums = (s) => {
+  const parts = String(s).split(NUM_RE).filter((t) => t !== '');
+  // 紧跟字母的（如 3C）是名称不是数据，不计数
+  return parts.map((t, n) => ({ t, num: /^\d/.test(t) && !/^[A-Za-z]/.test(parts[n + 1] || '') }));
+};
+
+const phoneDigits = [...profile.phoneDisplay];
+const flowChips = ['选品', '商品卡', '主图', '脚本', 'BD', '复盘'];
+---
+<Base home>
+  <!-- ======== 首屏：名字 + 角色 + 简介 + CTA（图2） ======== -->
+  <header class="hero" id="top">
+    <div class="hero-canvas" aria-hidden="true">
+      <div class="hero-orb" id="heroOrb">
+        <div class="hero-follow" id="heroFollow">
+          <div class="hero-jelly" id="heroJelly">
+            <div class="hero-circle"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="wrap hero-inner">
+      <h1 class="hero-name" aria-label={`${profile.name} ${profile.en}`}>
+        <span class="mask cn" id="heroCn"><span>{profile.name}</span></span>
+        <span class="mask en" id="heroEn"><span>{profile.en}</span></span>
+      </h1>
+
+      <div class="hero-meta" id="heroMeta">
+        <p class="hero-role">{profile.line1}</p>
+        <p class="hero-role">{profile.line2}</p>
+      </div>
+
+      <p class="hero-desc" id="heroDesc">{profile.blurb}</p>
+
+      <nav class="hero-ctas" id="heroCtas" aria-label="首屏操作">
+        <a class="hero-cta" href="#contact">查看联系方式</a>
+        <span class="hero-cta-sep" aria-hidden="true">|</span>
+        <a class="hero-cta" href="/resume.html" download="郭宗楠-AI跨境电商运营.html">下载简历</a>
+      </nav>
+    </div>
+
+    <div class="hero-scroll" id="heroScroll" aria-hidden="true"><span></span></div>
+  </header>
+
+  <!-- ======== 作品：堆叠卡片 ======== -->
+  <section class="sec" id="work">
+    <div class="wrap">
+      <div class="sec-head" data-reveal>
+        <h2>作品</h2>
+        <span class="meta">Selected Work · {String(works.length).padStart(2, '0')}</span>
+      </div>
+
+      <div class="wk" id="workList">
+
+
+<a class="wcard" href="/work/ai-video/">
+<div class="meta">
+ <div class="idx">01</div><h3 class="ttl"><b>AI 创意视频</b></h3><p class="sub">实拍混剪 + AI 成片</p>
+ <div class="tools"><div class="tool r" style="--d:0.5s" title="Seedance"><span class="ic"><img src="/assets/logos/seedance.png" alt="Seedance"></span><small>Seedance</small></div><div class="tool r" style="--d:0.6s" title="ChatGPT"><span class="ic"><img src="/assets/logos/openai.svg" alt="ChatGPT"></span><small>ChatGPT</small></div><div class="tool r" style="--d:0.7s" title="Claude"><span class="ic"><img src="/assets/logos/claude.svg" alt="Claude"></span><small>Claude</small></div><div class="tool r" style="--d:0.8s" title="Grok Bot"><span class="ic"><img src="/assets/logos/grokbot.png" alt="Grok Bot"></span><small>Grok Bot</small></div><div class="tool r" style="--d:0.9s" title="RunningHub"><span class="ic"><img src="/assets/logos/runninghub.png" alt="RunningHub"></span><small>RunningHub</small></div><div class="tool r" style="--d:1.0s" title="ComfyUI"><span class="ic"><img src="/assets/logos/comfyui.png" alt="ComfyUI"></span><small>ComfyUI</small></div></div>
+</div>
+<div class="arrow" aria-hidden="true">↗</div>
+<div class="media">
+ <div class="px" style="--k:-14;position:absolute;inset:0">
+  <div class="phone r" style="--x:-62%;--a:-8deg;--d:.2s"><img loading="lazy" src="/assets/video/posters/ai-02.jpg" alt=""></div>
+  <div class="phone r" style="--x:62%;--a:8deg;--d:.35s"><img loading="lazy" src="/assets/video/posters/video-replicate.jpg" alt=""></div>
+ </div>
+ <span class="ftag r on" style="left:6%;top:16%;--a:-6deg;--d:1s">实拍</span>
+ <span class="ftag r" style="right:20%;bottom:9%;--a:4deg;--d:1.15s">AI 成片</span>
+ <span class="ftag r on" style="left:12%;bottom:18%;--a:3deg;--d:1.3s">视频复刻</span>
+ <div class="phone c r" style="--x:0%;--a:0deg;--d:.55s"><video class="wk-vid" src="/assets/video/ai-01.mp4" poster="/assets/video/posters/ai-01.jpg" muted loop playsinline preload="metadata"></video></div>
+</div>
+</a>
+
+<a class="wcard" href="/work/ai-workflow/">
+<div class="meta">
+ <div class="idx">02</div><h3 class="ttl"><b>AI 工作流</b></h3><p class="sub">选品到素材的 AI 流水线</p>
+ <div class="flow">
+  <svg class="line" viewBox="0 0 300 100" preserveAspectRatio="none"><path d="M20 20 H268 C292 20 292 80 268 80 H20"/></svg>
+  <div class="chip r" style="--d:.3s">选品</div><div class="chip r" style="--d:.45s">商品卡</div><div class="chip r" style="--d:.6s">主图</div>
+  <div class="chip r" style="--d:.75s">脚本</div><div class="chip r" style="--d:.9s">BD</div><div class="chip r" style="--d:1.05s">复盘</div>
+ </div>
+</div>
+<div class="arrow" aria-hidden="true">↗</div>
+<div class="media">
+ <div class="win r px" style="left:4%;top:8%;--a:-4deg;--d:.5s;--k:-16"><div class="bar"><i></i><i></i><i></i><span>主图</span></div><img loading="lazy" src="/assets/video/posters/product-main-image.jpg" alt=""></div>
+ <div class="win r px" style="right:3%;top:22%;--a:3deg;--d:.8s;--k:-6;z-index:2"><div class="bar"><i></i><i></i><i></i><span>UGC 素材</span></div><img loading="lazy" src="/assets/video/posters/ugc.jpg" alt=""></div>
+ <div class="win r px" style="left:16%;bottom:5%;--a:-1deg;--d:1.1s;--k:8;z-index:3"><div class="bar"><i></i><i></i><i></i><span>AI 短视频</span></div><img loading="lazy" src="/assets/video/posters/ai-shorts.jpg" alt=""></div>
+</div>
+</a>
+
+<a class="wcard c3" href="/work/projects/">
+<div class="meta">
+ <div class="idx">03</div><h3 class="ttl"><b>数据总览</b></h3><p class="sub">墨西哥 · 美区跨境店铺操盘</p>
+</div>
+<div class="arrow" aria-hidden="true">↗</div>
+<div class="c3-art">
+ <div class="rad">
+  <svg class="grid" viewBox="0 0 780 780"><line x1="0" y1="390" x2="780" y2="390"/><line x1="390" y1="0" x2="390" y2="780"/><circle cx="390" cy="390" r="90"/><circle cx="390" cy="390" r="180"/><circle cx="390" cy="390" r="270"/><circle cx="390" cy="390" r="385"/><line class="tick" x1="115" y1="115" x2="665" y2="665"/><line class="tick" x1="665" y1="115" x2="115" y2="665"/></svg>
+  <div class="sweep"></div><i class="hub"></i>
+ <i class="blip lit" style="left:61.8%;top:33.2%;--t:0.89s"><svg viewBox="0 0 24 24"><path d="M7 4h10l-1 3 1 3-1 3 1 3-1 3 1 1H7l1-1-1-3 1-3-1-3 1-3-1-3z"/><path d="M10 11h4"/></svg></i>
+ <i class="blip" style="left:84.1%;top:44.0%;--t:1.51s"><svg viewBox="0 0 24 24"><path d="M10 3h4v3l2 3v11a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1V9l2-3z"/><path d="M8 13h8"/></svg></i>
+ <i class="blip" style="left:65.8%;top:61.0%;--t:2.14s"><svg viewBox="0 0 24 24"><path d="M3 7l9-4 9 4v10l-9 4-9-4z"/><path d="M3 7l9 4 9-4M12 11v10"/></svg></i>
+ <i class="blip lit" style="left:43.9%;top:66.9%;--t:3.18s"><svg viewBox="0 0 24 24"><path d="M8 3l-5 3 2 4 2-1v12h10V9l2 1 2-4-5-3c-1 2-2 3-4 3s-3-1-4-3z"/></svg></i>
+ <i class="blip" style="left:29.5%;top:57.5%;--t:3.87s"><svg viewBox="0 0 24 24"><path d="M9 21h6V11H9z"/><path d="M10 11V6l4-3v8"/></svg></i>
+ <i class="blip lit" style="left:17.8%;top:31.4%;--t:4.57s"><svg viewBox="0 0 24 24"><path d="M6 8h12l-1.5 13h-9z"/><path d="M5 8h14M9 8V5h6v3"/></svg></i>
+ <i class="blip" style="left:37.2%;top:27.8%;--t:4.98s"><svg viewBox="0 0 24 24"><path d="M3 4h2l2.5 11h10l2-8H6.5"/><circle cx="9" cy="19" r="1.5"/><circle cx="17" cy="19" r="1.5"/></svg></i>
+ <i class="blip" style="left:54.8%;top:63.3%;--t:2.62s"><svg viewBox="0 0 24 24"><path d="M3 7l9-4 9 4v10l-9 4-9-4z"/><path d="M3 7l9 4 9-4M12 11v10"/></svg></i>
+ </div>
+ <span class="cat c1 r on" style="--a:-6deg;--d:1.3s" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 3h10l-1 2.5 1 2.5-1 4 1 4-1 2.5 1 2.5H7l1-2.5-1-2.5 1-4-1-4 1-2.5z"/><path d="M10 10.5l4 3M14 10.5l-4 3"/></svg></span>
+ <span class="cat c2 r" style="--a:5deg;--d:1.55s" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 21h6V12H9z"/><path d="M10 12V7.5L14 4v8"/><path d="M8 16h8"/></svg></span>
+ <span class="cat c3 r on" style="--a:-3deg;--d:1.8s" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8.5 3L3 6l2 4 2-1v12h10V9l2 1 2-4-5.5-3c-.6 1.6-1.8 2.5-3.5 2.5S9.1 4.6 8.5 3z"/></svg></span>
+ <span class="cat c4 r" style="--a:4deg;--d:2.05s" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 11l9-7 9 7"/><path d="M5.5 9.5V20h13V9.5"/><path d="M10 20v-5h4v5"/></svg></span>
+ <span class="cat c5 r" style="--a:-5deg;--d:2.3s" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/></svg></span>
+</div>
+<div class="media c3-spacer" aria-hidden="true"></div>
+</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======== 联系 ======== -->
+  <section class="contact" id="contact">
+    <div class="wrap">
+      <h2 data-reveal>聊一聊？</h2>
+      <div class="links" data-reveal="80">
+        <a class="copy-chip" href={`tel:${profile.phone}`} data-copy={profile.phone} aria-label={`电话 ${profile.phone}，点击复制`}>
+          <span class="digits" aria-hidden="true">{phoneDigits.map((c, n) => <span class="d" style={`--d:${n}`}>{c}</span>)}</span>
+          <span class="hint" aria-hidden="true">点击复制</span>
+        </a>
+        <span class="wx-note">（微信同号）</span>
+        <a class="mail-link" href="mailto:154022632@qq.com">154022632@qq.com</a>
+      </div>
+      <p class="aside" data-reveal="140">{profile.role} · {profile.city}</p>
+    </div>
+  </section>
+</Base>
+
+<script>
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const fine = window.matchMedia('(pointer: fine)').matches;
+  const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+  const lerp = (a, b, t) => a + (b - a) * t;
+  const easeInOut = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+
+  const hero = document.getElementById('top');
+  const nav = document.getElementById('nav');
+  const cn = document.getElementById('heroCn');
+  const en = document.getElementById('heroEn');
+  const meta = document.getElementById('heroMeta');
+  const desc = document.getElementById('heroDesc');
+  const ctas = document.getElementById('heroCtas');
+  const cue = document.getElementById('heroScroll');
+  const orb = document.getElementById('heroOrb');
+  const follow = document.getElementById('heroFollow');
+  const jelly = document.getElementById('heroJelly');
+  const brandCn = nav?.querySelector('.brand-cn');
+  const navDot = nav?.querySelector('.nav-dot');
+
+  /* ---------- 1. 名字 + 绿圆：随滚动收进顶栏 ---------- */
+  let m = null; // 量好的静止位置（文档坐标）
+  let lastP = -1;
+  let fx = 0, fy = 0, fvx = 0, fvy = 0, ftx = 0, fty = 0; // 跟随弹簧
+
+  const work = document.getElementById('work');
+  const supportsClip = CSS.supports('overflow', 'clip');
+  const dockDistance = (y) => {
+    const navH = nav.offsetHeight;
+    // 不支持 overflow:clip 的旧浏览器首屏仍会裁切，只能退回到首屏下沿贴住顶栏
+    const fallback = hero.offsetHeight - navH - 16;
+    if (!work || !supportsClip) return Math.max(220, fallback);
+    const headTop = work.getBoundingClientRect().top + y + parseFloat(getComputedStyle(work).paddingTop || '0');
+    return Math.max(220, headTop - navH - 32);
+  };
+
+  const measure = () => {
+    if (!hero || !cn || !orb || !brandCn || !navDot) return;
+    cn.style.transform = 'none';
+    orb.style.transform = 'none';
+    const y = window.scrollY;
+    const c = cn.getBoundingClientRect();
+    const o = orb.getBoundingClientRect();
+    const b = brandCn.getBoundingClientRect();
+    const d = navDot.getBoundingClientRect();
+    m = {
+      cx: c.left + c.width / 2, cy: c.top + c.height / 2 + y, cw: c.width,
+      ox: o.left + o.width / 2, oy: o.top + o.height / 2 + y, ow: o.width,
+      bx: b.left + b.width / 2, by: b.top + b.height / 2, bw: b.width,
+      dx: d.left + d.width / 2, dy: d.top + d.height / 2, dw: d.width,
+      // 收进顶栏的那一刻，「作品」标题正好停在顶栏下方 32px
+      D: dockDistance(y),
+    };
+    lastP = -1;
+  };
+
+  const render = () => {
+    if (!m) return;
+    const y = window.scrollY;
+    const p = clamp(y / m.D, 0, 1);
+    const e = easeInOut(p);
+    const docked = p >= 1;
+
+    if (p !== lastP) {
+      // 名字
+      const sC = Math.exp(Math.log(m.bw / m.cw) * e);
+      const tx = (m.bx - m.cx) * e;
+      const ty = lerp(m.cy, m.by, e) - (m.cy - y);
+      cn.style.transform = `translate3d(${tx.toFixed(2)}px, ${ty.toFixed(2)}px, 0) scale(${sC.toFixed(4)})`;
+      cn.style.opacity = docked ? '0' : '1';
+
+      // 英文名 / 角色 / 简介 / CTA / 滚动提示先淡出
+      const fade = String(clamp(1 - p * 2.2, 0, 1));
+      en.style.opacity = fade;
+      if (meta) meta.style.opacity = fade;
+      if (desc) desc.style.opacity = fade;
+      if (ctas) {
+        ctas.style.opacity = fade;
+        ctas.style.pointerEvents = p > 0.3 ? 'none' : '';
+      }
+      if (cue) cue.style.opacity = fade;
+
+      nav.classList.toggle('is-docked', docked);
+      hero.classList.toggle('is-docked', docked);
+      lastP = p;
+    }
+
+    // 绿圆（含跟随偏移，越接近顶栏偏移越小）
+    const sO = Math.exp(Math.log(m.dw / m.ow) * e);
+    const otx = (m.dx - m.ox) * e;
+    const oty = lerp(m.oy, m.dy, e) - (m.oy - y);
+    orb.style.transform = `translate3d(${otx.toFixed(2)}px, ${oty.toFixed(2)}px, 0) scale(${sO.toFixed(4)})`;
+    orb.style.opacity = docked ? '0' : '1';
+    const k = 1 - e;
+    follow.style.transform = `translate3d(${(fx * k).toFixed(2)}px, ${(fy * k).toFixed(2)}px, 0)`;
+  };
+
+  /* ---------- 2. 绿圆跟随：桌面跟鼠标，手机跟倾斜 ---------- */
+  const stepSpring = () => {
+    // 软弹簧，像液体慢慢滑过去
+    fvx = fvx * 0.84 + (ftx - fx) * 0.045;
+    fvy = fvy * 0.84 + (fty - fy) * 0.045;
+    fx += fvx; fy += fvy;
+  };
+
+  let running = false, rafId = 0;
+  const loop = () => {
+    stepSpring();
+    render();
+    rafId = running ? requestAnimationFrame(loop) : 0;
+  };
+  const start = () => { if (!running) { running = true; rafId = requestAnimationFrame(loop); } };
+  const stop = () => { running = false; };
+
+  if (!reduce && hero && cn && orb && brandCn && navDot) {
+    document.documentElement.classList.add('morph-on');
+    measure();
+    render();
+
+    // 首屏在视口里才跑动画循环
+    new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) start();
+      else { stop(); render(); }
+    }).observe(hero);
+
+    let rt;
+    window.addEventListener('resize', () => {
+      clearTimeout(rt);
+      rt = setTimeout(() => { measure(); render(); }, 120);
+    });
+    window.addEventListener('scroll', () => { if (!running) render(); }, { passive: true });
+    if (document.fonts?.ready) document.fonts.ready.then(() => { measure(); render(); });
+    window.addEventListener('load', () => { measure(); render(); });
+
+    if (fine) {
+      hero.addEventListener('pointermove', (e) => {
+        const r = hero.getBoundingClientRect();
+        ftx = ((e.clientX - r.left) / r.width - 0.5) * r.width * 0.14;
+        fty = ((e.clientY - r.top) / r.height - 0.5) * r.height * 0.14;
+      });
+      hero.addEventListener('pointerleave', () => { ftx = 0; fty = 0; });
+    }
+  }
+
+  // 倾斜
+  let tiltOn = false, g0 = null, b0 = null;
+  const onTilt = (ev) => {
+    if (ev.gamma == null || ev.beta == null) return;
+    if (g0 === null) { g0 = ev.gamma; b0 = ev.beta; }
+    const w = window.innerWidth, h = hero.offsetHeight;
+    ftx = clamp((ev.gamma - g0) / 25, -1, 1) * w * 0.12;
+    fty = clamp((ev.beta - b0) / 25, -1, 1) * h * 0.08;
+  };
+  const enableTilt = () => {
+    if (tiltOn || reduce || fine || !('DeviceOrientationEvent' in window)) return;
+    tiltOn = true;
+    window.addEventListener('deviceorientation', onTilt, { passive: true });
+  };
+  const needsPermission = typeof window.DeviceOrientationEvent?.requestPermission === 'function';
+  if (!needsPermission) enableTilt();
+
+  /* ---------- 3. 点按绿圆：果冻回弹 + 波纹 ---------- */
+  if (jelly) {
+    jelly.addEventListener('click', (e) => {
+      if (needsPermission && !tiltOn && !fine) {
+        window.DeviceOrientationEvent.requestPermission()
+          .then((s) => { if (s === 'granted') enableTilt(); })
+          .catch(() => {});
+      }
+      if (reduce) return;
+      jelly.classList.remove('is-jelly');
+      void jelly.offsetWidth;
+      jelly.classList.add('is-jelly');
+
+      const r = jelly.getBoundingClientRect();
+      const ring = document.createElement('span');
+      ring.className = 'ripple';
+      const px = r.width ? ((e.clientX - r.left) / r.width) * 100 : 50;
+      const py = r.height ? ((e.clientY - r.top) / r.height) * 100 : 50;
+      ring.style.left = (e.clientX ? px : 50) + '%';
+      ring.style.top = (e.clientY ? py : 50) + '%';
+      jelly.appendChild(ring);
+      ring.addEventListener('animationend', () => ring.remove());
+    });
+  }
+
+  /* ---------- 4/5. 卡片进入视口：数字计数 + 荧光笔划线 ---------- */
+  const fmtNum = (raw) => {
+    const dec = (raw.split('.')[1] || '').length;
+    const group = raw.includes(',');
+    const f = 10 ** dec;
+    return (v) => (Math.round(v * f) / f).toLocaleString('en-US', {
+      minimumFractionDigits: dec, maximumFractionDigits: dec, useGrouping: group,
+    });
+  };
+
+  const countUp = (el) => {
+    const raw = el.dataset.num;
+    const to = parseFloat(raw.replace(/,/g, ''));
+    if (!isFinite(to)) return;
+    const fmt = fmtNum(raw);
+    const dur = 900 + Math.min(700, String(Math.round(to)).length * 140);
+    const t0 = performance.now();
+    const tick = (now) => {
+      const t = clamp((now - t0) / dur, 0, 1);
+      el.textContent = t < 1 ? fmt(to * (1 - Math.pow(1 - t, 3))) : raw;
+      if (t < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  };
+
+  const rows = [...document.querySelectorAll('.work-row')];
+  if (!reduce) {
+    rows.forEach((row) => {
+      row.querySelectorAll('.num').forEach((el) => {
+        // 锁定宽度，避免计数时文字左右跳
+        el.style.minWidth = el.getBoundingClientRect().width + 'px';
+        el.textContent = fmtNum(el.dataset.num)(0);
+      });
+    });
+  }
+
+  const rowIO = new IntersectionObserver((entries) => {
+    entries.forEach((en) => {
+      if (!en.isIntersecting) return;
+      const row = en.target;
+      row.classList.add('is-on');
+      if (!reduce) row.querySelectorAll('.num').forEach(countUp);
+      rowIO.unobserve(row);
+    });
+  }, { threshold: 0.45 });
+  rows.forEach((r) => rowIO.observe(r));
+
+  // 视频预览：在视口内才播，出视口暂停（省电）
+  const vids = [...document.querySelectorAll('.prev-vid')];
+  if (vids.length) {
+    const vidIO = new IntersectionObserver((entries) => {
+      entries.forEach((en) => {
+        const v = en.target;
+        if (en.isIntersecting) {
+          const p = v.play();
+          if (p && p.catch) p.catch(() => {});
+        } else {
+          v.pause();
+        }
+      });
+    }, { threshold: 0.35 });
+    vids.forEach((v) => {
+      if (reduce) { v.removeAttribute('autoplay'); return; }
+      vidIO.observe(v);
+    });
+  }
+
+  /* ---------- 6. 堆叠卡片：后一张盖上来，前一张缩小变暗 ---------- */
+  const items = [...document.querySelectorAll('.stack-item')];
+  if (!reduce && items.length > 1) {
+    let tops = [], pending = false;
+    const readTops = () => { tops = items.map((it) => parseFloat(getComputedStyle(it).top) || 0); };
+    const stack = () => {
+      pending = false;
+      for (let i = 0; i < items.length - 1; i++) {
+        const next = items[i + 1];
+        const h = items[i].offsetHeight || 1;
+        const q = clamp(1 - (next.getBoundingClientRect().top - tops[i + 1]) / h, 0, 1);
+        const row = rows[i];
+        row.style.setProperty('--s', (1 - 0.06 * q).toFixed(4));
+        row.style.setProperty('--dim', (0.09 * q).toFixed(3));
+      }
+    };
+    const req = () => { if (!pending) { pending = true; requestAnimationFrame(stack); } };
+    readTops(); stack();
+    window.addEventListener('scroll', req, { passive: true });
+    window.addEventListener('resize', () => { readTops(); req(); });
+  }
+  /* ---------- 作品卡：进入视口分层冒出 + 轻视差 ---------- */
+  {
+    const cards = [...document.querySelectorAll('.wk .wcard')];
+    const rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const cio = new IntersectionObserver((es) => es.forEach((e) => {
+      const c = e.target, v = c.querySelector('video');
+      if (e.isIntersecting) { c.classList.add('in'); if (v && !rm) v.play().catch(() => {}); }
+      else if (v) v.pause();
+    }), { threshold: 0.3 });
+    cards.forEach((c) => cio.observe(c));
+    if (!rm) {
+      let t = 0;
+      const f = () => { t = 0; const h = innerHeight; cards.forEach((c) => { const r = c.getBoundingClientRect();
+        c.style.setProperty('--p', Math.max(-1, Math.min(1, (r.top + r.height / 2 - h / 2) / h)).toFixed(3)); }); };
+      addEventListener('scroll', () => { if (!t) t = requestAnimationFrame(f); }, { passive: true }); f();
+    }
+  }
+</script>

@@ -1,0 +1,168 @@
+---
+import '../styles/global.css';
+import { profile } from '../data/works.js';
+
+const { title = `${profile.name} ${profile.en} · ${profile.role}`, description = `${profile.name}（${profile.en}）· ${profile.role} · 作品集`, home = false } = Astro.props;
+---
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>{title}</title>
+  <meta name="description" content={description}>
+  <meta name="theme-color" content="#FAFAF6">
+  <meta property="og:title" content={title}>
+  <meta property="og:description" content={description}>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><circle cx='32' cy='32' r='30' fill='%23D8FF3E'/><text x='32' y='43' font-size='30' text-anchor='middle' font-family='PingFang SC,sans-serif' font-weight='600' fill='%23111110'>郭</text></svg>">
+</head>
+<body>
+  <script is:inline>
+    (function () {
+      var d = document.documentElement;
+      if (!('IntersectionObserver' in window)) return;
+      d.classList.add('js');
+      // 首页名字收进顶栏的动效：提前标记，避免顶栏 logo 先闪一下
+      if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) d.classList.add('morph-on');
+      // 兜底：主脚本若没能加载，4 秒后把内容全部放出来
+      setTimeout(function () {
+        if (!window.__revealReady) d.classList.remove('js');
+      }, 4000);
+    })();
+  </script>
+  <nav class:list={['nav', { 'nav--home': home }]} id="nav">
+    <div class="wrap">
+      <a class="brand" href="/" aria-label={`${profile.name} ${profile.en} · 首页`}>
+        <span class="nav-dot" aria-hidden="true"></span>
+        <span class="brand-cn">{profile.name}</span><em>{profile.en}</em>
+      </a>
+      <div class="nav-links">
+        <a href="/#work">作品</a>
+        <a href="/#contact">联系</a>
+      </div>
+    </div>
+  </nav>
+
+  <slot />
+
+  <footer>
+    <div class="wrap">
+      <span>© {new Date().getFullYear()} {profile.name} · {profile.en}</span>
+      <span>页面内数据均来自店铺后台，店铺与账号信息已脱敏</span>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+  <script>
+    import Lenis from 'lenis';
+
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // 平滑滚动（只在桌面端开启，手机保留原生滚动手感）
+    if (!reduce && window.matchMedia('(pointer: fine)').matches) {
+      const lenis = new Lenis({ duration: 1.1, smoothWheel: true });
+      const raf = (t) => { lenis.raf(t); requestAnimationFrame(raf); };
+      requestAnimationFrame(raf);
+
+      document.querySelectorAll('a[href^="/#"]').forEach((a) => {
+        a.addEventListener('click', (e) => {
+          const id = a.getAttribute('href').slice(1);
+          const el = document.querySelector(id);
+          if (el && location.pathname === '/') {
+            e.preventDefault();
+            lenis.scrollTo(el, { offset: -40 });
+          }
+        });
+      });
+    }
+
+    // 顶栏：滚动后出现磨砂底
+    const nav = document.getElementById('nav');
+    const onScroll = () => nav.classList.toggle('is-stuck', window.scrollY > 24);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    // 滚动进场
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((en) => {
+        if (en.isIntersecting) {
+          const el = en.target;
+          const delay = Number(el.dataset.reveal || 0);
+          setTimeout(() => el.classList.add('is-in'), delay);
+          io.unobserve(el);
+        }
+      });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.05 });
+    // 首屏已可见的元素直接显示；只有屏幕下方的才做滚动浮现（内容永不因等 JS 而空白）
+    const vh = window.innerHeight;
+    document.querySelectorAll('[data-reveal]').forEach((el) => {
+      if (el.getBoundingClientRect().top < vh) el.classList.add('is-in');
+      else io.observe(el);
+    });
+    document.documentElement.classList.add('reveal-on');
+    window.__revealReady = true;
+
+    // 复制手机号：数字依次跳一下，再弹提示
+    const toast = document.getElementById('toast');
+    let hideT, offT;
+    // 收起：先去掉 .show 播淡出，再用 hidden 彻底移出渲染/无障碍树。
+    // 不依赖 transition 结束事件（标签页在后台或不渲染时过渡会卡住）。
+    const hideToast = () => {
+      clearTimeout(hideT);
+      if (toast.hidden) return;
+      toast.classList.remove('show');
+      clearTimeout(offT);
+      offT = setTimeout(() => { toast.hidden = true; toast.textContent = ''; }, 400);
+    };
+    // 提示条贴着被点的号码出现（优先在上方，空间不够放下方），并限制在视口内
+    const showToast = (msg, anchor) => {
+      clearTimeout(hideT);
+      clearTimeout(offT);
+      toast.hidden = false;
+      toast.textContent = msg;
+      const vw = document.documentElement.clientWidth;
+      const tw = toast.offsetWidth, th = toast.offsetHeight;
+      const r = anchor ? anchor.getBoundingClientRect() : { left: vw / 2, width: 0, top: window.innerHeight - 40, bottom: window.innerHeight - 40 };
+      const gap = 10, pad = 12;
+      const left = Math.min(Math.max(r.left + r.width / 2 - tw / 2, pad), vw - tw - pad);
+      const below = r.top - th - gap < pad;
+      const top = below ? r.bottom + gap : r.top - th - gap;
+      toast.classList.toggle('below', below);
+      toast.style.left = left + 'px';
+      toast.style.top = top + 'px';
+      void toast.offsetWidth; // 先落在隐藏态，再加 .show 才有进场
+      toast.classList.add('show');
+      hideT = setTimeout(hideToast, 1600);
+    };
+    // 滚动时提示条会和号码错位，直接收起
+    window.addEventListener('scroll', () => { if (toast.classList.contains('show')) hideToast(); }, { passive: true });
+
+    const hop = (btn) => {
+      const digits = btn.querySelectorAll('.d');
+      if (reduce || !digits.length) return 0;
+      btn.classList.remove('is-hop');
+      void btn.offsetWidth; // 重新触发动画
+      btn.classList.add('is-hop');
+      const total = (digits.length - 1) * 35 + 420;
+      clearTimeout(btn._hopT);
+      btn._hopT = setTimeout(() => btn.classList.remove('is-hop'), total + 50);
+      return Math.min(total, 520);
+    };
+
+    document.querySelectorAll('[data-copy]').forEach((btn) => {
+      btn.addEventListener('click', async (e) => {
+        const val = btn.getAttribute('data-copy');
+        const isTouch = window.matchMedia('(pointer: coarse)').matches;
+        // 手机上直接拨号；电脑上复制
+        if (isTouch && btn.tagName === 'A') { hop(btn); return; }
+        e.preventDefault();
+        let ok = true;
+        try { await navigator.clipboard.writeText(val); } catch { ok = false; }
+        const wait = hop(btn);
+        setTimeout(() => showToast(ok ? '已复制' : val, btn), wait);
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>郭宗楠 — AI 跨境电商运营</title>
+<style>
+  :root{
+    --blue:#154a94;
+    --ink:#181e2a;
+    --muted:#585e6d;
+    --rule:#dfe3ea;
+  }
+
+  *{ box-sizing:border-box; }
+
+  html,body{ margin:0; padding:0; }
+
+  body{
+    background:#f0f1f4;
+    color:var(--ink);
+    font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Helvetica Neue",Arial,sans-serif;
+    font-size:12.5px;
+    line-height:1.68;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+  }
+
+  .page{
+    width:210mm;
+    margin:28px auto;
+    padding:14mm 16mm;
+    background:#fff;
+    box-shadow:0 2px 18px rgba(24,30,42,.10);
+  }
+
+  /* ---------- 头部 ---------- */
+  .name{
+    margin:0 0 6px;
+    font-size:27px;
+    font-weight:600;
+    letter-spacing:.04em;
+    line-height:1.25;
+  }
+
+  .role{
+    margin:0 0 7px;
+    font-size:13px;
+    font-weight:600;
+    color:var(--blue);
+    line-height:1.5;
+  }
+
+  .contact{
+    margin:0 0 2px;
+    font-size:11.5px;
+    color:var(--muted);
+  }
+
+  .contact .sep{ margin:0 7px; color:#c3c9d4; }
+
+  .intent{
+    margin:0 0 20px;
+    font-size:11.5px;
+    color:var(--muted);
+  }
+
+  /* ---------- 章节标题 ---------- */
+  h2{
+    margin:0 0 9px;
+    padding-bottom:4px;
+    font-size:12.5px;
+    font-weight:600;
+    color:var(--blue);
+    letter-spacing:.06em;
+    border-bottom:1px solid var(--rule);
+  }
+
+  section{ margin-bottom:17px; }
+  section:last-child{ margin-bottom:0; }
+
+  /* ---------- 简介 ---------- */
+  .summary{
+    margin:0;
+    padding:0;
+    list-style:none;
+  }
+
+  .summary li{
+    position:relative;
+    padding-left:13px;
+    margin-bottom:4px;
+    text-align:justify;
+  }
+
+  .summary li::before{
+    content:"";
+    position:absolute;
+    left:2px; top:.68em;
+    width:4px; height:4px;
+    border-radius:50%;
+    background:var(--blue);
+  }
+
+  /* ---------- 工作经历 ---------- */
+  .job{ margin-bottom:15px; }
+  .job:last-child{ margin-bottom:0; }
+
+  .job-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    gap:14px;
+    flex-wrap:wrap;
+  }
+
+  .job-head h3{
+    margin:0;
+    font-size:13.5px;
+    font-weight:600;
+    line-height:1.45;
+  }
+
+  .job-head .date{
+    font-size:11.5px;
+    color:var(--muted);
+    white-space:nowrap;
+  }
+
+  .job-sub{
+    margin:1px 0 5px;
+    font-size:11.5px;
+    color:var(--blue);
+  }
+
+  .label{
+    margin:6px 0 2px;
+    font-size:11.5px;
+    font-weight:600;
+    color:var(--muted);
+    letter-spacing:.04em;
+  }
+
+  ul.detail{
+    margin:0;
+    padding:0;
+    list-style:none;
+  }
+
+  ul.detail li{
+    position:relative;
+    padding-left:13px;
+    margin-bottom:3px;
+    text-align:justify;
+  }
+
+  ul.detail li::before{
+    content:"";
+    position:absolute;
+    left:3px; top:.68em;
+    width:3px; height:3px;
+    border-radius:50%;
+    background:#9aa3b3;
+  }
+
+  strong{ font-weight:600; }
+
+  /* ---------- 打印 ---------- */
+  @page{ size:A4; margin:12mm 14mm; }
+
+  @media print{
+    body{ background:#fff; font-size:12.3px; }
+
+    .page{
+      width:auto;
+      margin:0;
+      padding:0;
+      box-shadow:none;
+    }
+
+    h2, .job-head, .job-sub, .label{ break-after:avoid; page-break-after:avoid; }
+
+    li, .job-head{ break-inside:avoid; page-break-inside:avoid; }
+
+    section{ margin-bottom:15px; }
+
+    a{ color:inherit; text-decoration:none; }
+  }
+
+  @media (max-width:820px){
+    .page{
+      width:auto;
+      margin:0;
+      padding:20px 16px;
+      box-shadow:none;
+      min-height:100vh;
+    }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ======== 头部 ======== -->
+  <h1 class="name">郭宗楠</h1>
+  <p class="role">AI 跨境电商运营　·　TikTok Shop 美区 / 墨区冷启动　·　AI 运营工作流搭建</p>
+  <p class="contact">
+    136-0902-4221<span class="sep">|</span>154022632@qq.com<span class="sep">|</span>广州
+  </p>
+  <p class="intent">求职意向：AI 跨境电商运营　|　期望薪资：18-22K</p>
+
+  <!-- ======== 个人简介 ======== -->
+  <section>
+    <h2>个人简介</h2>
+    <ul class="summary">
+      <li><strong>TK 全链路运营：</strong>具备欧美及墨区市场冷启动经验，熟悉店铺运营、选品定价、商品卡优化、内容矩阵、数据复盘</li>
+      <li><strong>AI 工作流：</strong>以飞书表格为任务中台搭建 AI 运营工作流，覆盖选品分析、商品主图详情、视频脚本与数据复盘；单人素材日产效率提升 5–10 倍</li>
+      <li><strong>内容增长：</strong>具备短视频脚本策划、爆款视频复盘、达人内容 Brief、自营内容矩阵和 AI 混剪素材产出经验</li>
+      <li><strong>技术工具：</strong>软路由 IP 隔离方案实现多账号矩阵并发运营，熟悉 Claude Code、GPT、N8N、PS、飞书多维表格等工具</li>
+    </ul>
+  </section>
+
+  <!-- ======== 工作经历 ======== -->
+  <section>
+    <h2>工作经历</h2>
+
+    <!-- 一匹水 -->
+    <div class="job">
+      <div class="job-head">
+        <h3>一匹水科技有限公司 — 跨境运营（墨西哥站）</h3>
+        <span class="date">2025.10 - 2026.08</span>
+      </div>
+      <p class="job-sub">墨区多品类运营 兼 AI 工作流搭建</p>
+
+      <p class="label">工作职责</p>
+      <ul class="detail">
+        <li>统筹墨西哥市场美妆、鞋服、食品类目冷启运营，负责选品调研、价格体系、内容产出与供应链履约的全流程策略。</li>
+        <li><strong>搭建 AI 运营工作流</strong>：以飞书表格为任务中台，打通商品卡 → 主图方案 → 短视频脚本 → BD 跟进 → 数据复盘等多个环节，实现批量达人 UGC 内容产出与爆款 1:1 复刻；<strong>单人素材日产效率提升 5–10 倍</strong>。</li>
+        <li>制定达人精细化筛选方案与脚本逻辑，引领 BD 规模化触达达人；动态备货计划，对接墨西哥当地仓库与货盘资源，保障全链路履约顺畅。</li>
+      </ul>
+
+      <p class="label">核心业绩</p>
+      <ul class="detail">
+        <li><strong>美妆零食：</strong>入职 1 个月将店铺月销从 100 单拉升至月均 2,000 单、峰值 5,800 单/月；广告 ROAS 稳定在 5 以上、峰值约 13，零食单品进入类目榜第 4、热销榜 Top 10。</li>
+        <li><strong>鞋服品类：</strong>世界杯期间单品单月峰值 9,000 单、销售额约 200 万比索，冲入类目前十；<strong>鞋类板块</strong>单月销售额约 80 万比索。</li>
+        <li><strong>内容增长：</strong>策划达人内容产出单条 800 万播放爆款，单条视频带货超 2,000 单；自营实拍 + AI 混剪素材跑出多条百万级播放。</li>
+      </ul>
+    </div>
+
+    <!-- TK 全域代运营 -->
+    <div class="job">
+      <div class="job-head">
+        <h3>TK 全域代运营 — 跨境运营（美区）</h3>
+        <span class="date">2023.07 - 2025.04</span>
+      </div>
+      <p class="job-sub">为工厂出海提供全链路运营解决方案</p>
+
+      <p class="label">工作职责</p>
+      <ul class="detail">
+        <li>负责美区 TikTok Shop 多家店群的运营规划，覆盖 3C、保健品、服装、玩具等类目，为合作厂商提供从运营策略、内容矩阵、达人资源、账号网络到店铺增长的全链路解决方案。</li>
+        <li>制定内容生产与店铺运营标准流程，实现内容规模化产出；深度对接 TikTok Shop 官方经理及一手服务商资源，解决资质、网络、账号、达人、履约等关键问题。</li>
+        <li><strong>自研软路由 IP 网络隔离方案</strong>，支撑 50+ 账号矩阵安全运营，提升多账号内容测试效率与店群运营稳定性。</li>
+      </ul>
+
+      <p class="label">核心业绩</p>
+      <ul class="detail">
+        <li>操盘 3C 单品上线当月 GMV 5 万美元，女装新店首月 GMV 突破 1 万美元，广告 ROAS 峰值达 18。</li>
+        <li>与合作机构联合打品（我方负责内容与脚本策划），最大单品成为美区类目第一，月销 2 万单、月 GMV 达 100 万美元。</li>
+      </ul>
+    </div>
+
+    <!-- 禅游 -->
+    <div class="job">
+      <div class="job-head">
+        <h3>深圳市禅游科技有限公司 — 新媒体运营</h3>
+        <span class="date">2020.06 - 2023.06</span>
+      </div>
+      <p class="job-sub">国内多平台 IP 矩阵与内容操盘</p>
+
+      <ul class="detail">
+        <li>统筹抖音、快手、小红书多平台 IP 矩阵号，以数据驱动策略实现 2021 年度总播放量超 2 亿、总获赞超 100 万；操盘游戏主播账号 3 个月内粉丝从 0 增至 40 万。</li>
+        <li>策划个人 IP 内容方向，打造单条内容国内全平台超 3,000 万播放爆款。</li>
+      </ul>
+    </div>
+
+    <!-- 星童星 -->
+    <div class="job">
+      <div class="job-head">
+        <h3>星童星文化有限公司 — 活动策划</h3>
+        <span class="date">2018.07 - 2020.05</span>
+      </div>
+      <ul class="detail">
+        <li>负责年会、模特走秀、政府活动等项目的策划与执行，主要承担内容与脚本策划。</li>
+      </ul>
+    </div>
+
+  </section>
+
+  <!-- ======== 教育背景 ======== -->
+  <section>
+    <h2>教育背景</h2>
+    <div class="job-head">
+      <h3>广州华立科技职业学院 — 环境艺术设计</h3>
+      <span class="date">2015 - 2018</span>
+    </div>
+  </section>
+
+</div>
+</body>
+</html>

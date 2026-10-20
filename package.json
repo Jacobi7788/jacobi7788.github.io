@@ -1,0 +1,25 @@
+{
+  "name": "guozongnan-portfolio",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gzn154022632-prog/gzn154022632-prog.github.io.git"
+  },
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/gzn154022632-prog/gzn154022632-prog.github.io/issues"
+  },
+  "homepage": "https://github.com/gzn154022632-prog/gzn154022632-prog.github.io#readme",
+  "dependencies": {
+    "astro": "^7.4.0",
+    "gsap": "^3.15.0",
+    "lenis": "^1.3.27"
+  },
+  "private": true
+}
