@@ -31,6 +31,8 @@ export const works = [
       { src: '/assets/video/ai-01.mp4', poster: '/assets/video/posters/ai-01.jpg', cap: 'AI 成片 01' },
       { src: '/assets/video/ai-02.mp4', poster: '/assets/video/posters/ai-02.jpg', cap: 'AI 成片 02' },
       { src: '/assets/video/ai-03.mp4', poster: '/assets/video/posters/ai-03.jpg', cap: 'AI 成片 03' },
+      { src: '/assets/video/ai-04.mp4', poster: '/assets/video/posters/ai-04.jpg', cap: 'AI 成片 04' },
+      { src: '/assets/video/ai-05.mp4', poster: '/assets/video/posters/ai-05.jpg', cap: 'AI 成片 05' },
       { src: '/assets/video/live-01.mp4', poster: '/assets/video/posters/live-01.jpg', cap: '混剪样例01' },
       { src: '/assets/video/live-02.mp4', poster: '/assets/video/posters/live-02.jpg', cap: '混剪样例02' },
       { src: '/assets/video/live-03.mp4', poster: '/assets/video/posters/live-03.jpg', cap: '实拍 / 达人样例 03' },
