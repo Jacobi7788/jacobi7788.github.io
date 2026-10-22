@@ -62,6 +62,7 @@ const { title = `${profile.name} ${profile.en} · ${profile.role}`, description 
     // 平滑滚动（只在桌面端开启，手机保留原生滚动手感）
     if (!reduce && window.matchMedia('(pointer: fine)').matches) {
       const lenis = new Lenis({ duration: 1.1, smoothWheel: true });
+      window.__lenis = lenis;
       const raf = (t) => { lenis.raf(t); requestAnimationFrame(raf); };
       requestAnimationFrame(raf);
 
